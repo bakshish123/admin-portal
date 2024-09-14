@@ -11,7 +11,7 @@ const Navbar: React.FC = () => {
     { name: 'Home', path: '/' },
     { name: 'Search', path: '/Search' },
     { name: 'create Alumni', path: '/createAlumni' },
-    { name: 'Events', path: '/events' },
+    { name: 'Directory', path: '/directory' },
     { name: 'Forums', path: '/forums' },
     { name: 'Messaging', path: '/messaging' },
     { name: 'Announcements', path: '/announcements' },
