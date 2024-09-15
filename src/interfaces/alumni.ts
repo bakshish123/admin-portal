@@ -2,7 +2,6 @@ export interface IAlumni {
     firstName: string;
     lastName: string;
     email: string;
-    password: string;
     graduationYear: number;
     degree: string;
     major: string;

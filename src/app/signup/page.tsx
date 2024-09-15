@@ -10,7 +10,7 @@ const SignupSchema = Yup.object().shape({
   password: Yup.string().min(6, 'Password too short').required('Required'),
   dob: Yup.date().required('Required'),
   rollNumber: Yup.string().required('Required'),
-  isAlumni: Yup.boolean().required('Required'),
+  isAlumni: Yup.boolean(),
 });
 
 const SignupForm = () => {
@@ -39,7 +39,12 @@ const SignupForm = () => {
 
             const data = await response.json();
             if (response.ok) {
-              router.push('/'); // Redirect to home page upon successful signup
+              // Check if the user is signing up as an alumni
+              if (values.isAlumni) {
+                router.push('/createAlumni'); // Redirect to create alumni page
+              } else {
+                router.push('/'); // Redirect to home page for non-alumni users
+              }
             } else {
               console.error(data.error);
               // Handle any signup error (e.g., display error message to user)
