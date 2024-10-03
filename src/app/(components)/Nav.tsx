@@ -1,16 +1,18 @@
-'use client'; // Add this to indicate it's a client component
-
+"use client"
+import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation'; // Use next/navigation instead of next/router
+import { getServerSession } from 'next-auth';
+import { options } from '../api/auth/[...nextauth]/options';
 import React from 'react';
 
-const Navbar: React.FC = () => {
-  const pathname = usePathname(); // Replace useRouter with usePathname
+const Navbar: React.FC = async () => {
+  const pathname = usePathname();
+  const session = await getServerSession(options);
 
   const navItems = [
     { name: 'Home', path: '/' },
     { name: 'Search', path: '/Search' },
-    { name: 'create Alumni', path: '/createAlumni' },
+    { name: 'Create Alumni', path: '/createAlumni' },
     { name: 'Directory', path: '/directory' },
     { name: 'Forums', path: '/forums' },
     { name: 'Messaging', path: '/messaging' },
@@ -21,12 +23,9 @@ const Navbar: React.FC = () => {
   return (
     <nav className="bg-gray-800 text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
-        {/* Logo */}
         <div className="text-2xl font-bold">
           <Link href="/">Alumni Portal</Link>
         </div>
-        
-        {/* Navigation Links */}
         <div className="flex space-x-4">
           {navItems.map((item, index) => (
             <Link key={index} href={item.path} className={`px-3 py-2 rounded-md text-sm font-medium ${
@@ -36,15 +35,22 @@ const Navbar: React.FC = () => {
             </Link>
           ))}
         </div>
-
-        {/* Authentication Links (could be conditional based on user state) */}
         <div>
-          <Link href="/login" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
-            Login
-          </Link>
-          <Link href="/register" className="ml-4 px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
-            Register
-          </Link>
+        {session ? (
+  <Link href="/api/auth/signout?callbackUrl=/" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+    Logout
+  </Link>
+) : (
+  <div className="flex space-x-4"> {/* Add spacing between Login and Sign Up */}
+    <Link href="/api/auth/signin" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+      Login
+    </Link>
+    <Link href="/signup" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+      Sign Up
+    </Link>
+  </div>
+)}
+
         </div>
       </div>
     </nav>
