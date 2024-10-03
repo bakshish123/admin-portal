@@ -4,14 +4,20 @@ import bcrypt from 'bcryptjs';
 import dbConnect from '../../database';
 import User, { IUser } from '../../models/user';
 
-
 // Named export for the POST method
 export async function POST(req: NextRequest) {
   try {
-    const { email, password, dob, rollNumber, isAlumni } = await req.json();
+    // Parse the request body (ensure this is correctly retrieving the body)
+    const { email, password, dob, rollNumber, isAlumni } = await req.json(); 
 
     // Connect to the database
     await dbConnect();
+
+    // Check if the user already exists
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return NextResponse.json({ error: 'User already exists' }, { status: 400 });
+    }
 
     // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -31,7 +37,7 @@ export async function POST(req: NextRequest) {
     // Return a success response
     return NextResponse.json({ message: 'User created successfully' }, { status: 201 });
   } catch (error) {
-    console.error(error);
+    console.error('Error creating user:', error);
     return NextResponse.json({ error: 'Error creating user' }, { status: 500 });
   }
 }

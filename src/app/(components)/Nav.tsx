@@ -36,11 +36,21 @@ const Navbar: React.FC = async () => {
           ))}
         </div>
         <div>
-          {session ? (
-            <Link href="/api/auth/signout?callbackUrl=/">Logout</Link>
-          ) : (
-            <Link href="/api/auth/signin">Login</Link>
-          )}
+        {session ? (
+  <Link href="/api/auth/signout?callbackUrl=/" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+    Logout
+  </Link>
+) : (
+  <div className="flex space-x-4"> {/* Add spacing between Login and Sign Up */}
+    <Link href="/api/auth/signin" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+      Login
+    </Link>
+    <Link href="/signup" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
+      Sign Up
+    </Link>
+  </div>
+)}
+
         </div>
       </div>
     </nav>
