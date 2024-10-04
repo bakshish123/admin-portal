@@ -25,14 +25,31 @@ const AlumniDirectory = () => {
     const fetchAlumni = async () => {
       try {
         const response = await fetch('/api/alumni');
+        console.log('Response status:', response.status);
+
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }
+
         const data = await response.json();
-        setAlumni(data);
-      } catch (error) {
-        console.error('Failed to fetch alumni:', error);
-        setError('Failed to fetch alumni');
+        console.log('API response:', data); // Log the API response
+
+        if (Array.isArray(data)) {
+          setAlumni(data);
+        } else {
+          console.error('Data is not an array:', data);
+          setError('Data is not in the expected format.');
+        }
+      } catch (err) {
+        // Check if the caught error is an instance of Error
+        if (err instanceof Error) {
+          console.error('Failed to fetch alumni:', err);
+          setError(`Failed to fetch alumni: ${err.message}`);
+        } else {
+          // Fallback for non-Error objects
+          console.error('Unexpected error:', err);
+          setError('An unexpected error occurred.');
+        }
       } finally {
         setLoading(false);
       }

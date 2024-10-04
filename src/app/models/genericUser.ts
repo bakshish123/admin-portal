@@ -14,7 +14,7 @@ const UserSchema: Schema = new Schema({
   password: { type: String, required: true },
   dob: { type: Date, required: true },
   rollNumber: { type: String, required: true },
-  isAlumni: { type: Boolean, required: true }
+  isAlumni: { type: Boolean, default: false }
 });
 
 export default mongoose.models.User || mongoose.model<IUser>('User', UserSchema);

@@ -1,3 +1,101 @@
+// pages/login.tsx
+"use client"
+import { signIn } from "next-auth/react";
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
+import { useState } from "react";
+import { useRouter } from "next/router";
+
+const Login = () => {
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+        <h1 className="text-2xl font-bold mb-6">Login</h1>
+
+        <Formik
+          initialValues={{
+            rollNumber: "",
+            password: "",
+          }}
+          validationSchema={Yup.object({
+            rollNumber: Yup.string().required("Roll number is required"),
+            password: Yup.string()
+              .required("Password is required")
+              .min(6, "Password must be at least 6 characters long"),
+          })}
+          onSubmit={async (values, { setSubmitting }) => {
+            setError(null);  // Reset error before submission
+            const result = await signIn("credentials", {
+              redirect: false,
+              rollNumber: values.rollNumber,
+              password: values.password,
+            });
+
+            setSubmitting(false);
+
+            if (result?.error) {
+              setError(result.error);
+            } else {
+              router.push("/");  // Redirect to homepage after successful login
+            }
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form>
+              <div className="mb-4">
+                <label htmlFor="rollNumber" className="block text-gray-700">
+                  Roll Number
+                </label>
+                <Field
+                  name="rollNumber"
+                  type="text"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+                />
+                <ErrorMessage
+                  name="rollNumber"
+                  component="div"
+                  className="text-red-600 text-sm"
+                />
+              </div>
+
+              <div className="mb-6">
+                <label htmlFor="password" className="block text-gray-700">
+                  Password
+                </label>
+                <Field
+                  name="password"
+                  type="password"
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm"
+                />
+                <ErrorMessage
+                  name="password"
+                  component="div"
+                  className="text-red-600 text-sm"
+                />
+              </div>
+
+              {error && <p className="text-red-600 mb-4">{error}</p>}
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-blue-500 text-white py-2 px-4 rounded-md"
+              >
+                {isSubmitting ? "Logging in..." : "Login"}
+              </button>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </div>
+  );
+};
+
+export default Login;
+
 // "use client";
 
 // import { signIn } from 'next-auth/react';

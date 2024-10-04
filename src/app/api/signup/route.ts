@@ -2,7 +2,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
 import dbConnect from '../../database';
-import User, { IUser } from '../../models/user';
+import User, { IUser } from '../../models/genericUser';
 
 // Named export for the POST method
 export async function POST(req: NextRequest) {
