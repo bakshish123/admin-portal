@@ -1,8 +1,8 @@
-// src/app/signup/page.tsx
 'use client';
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { signIn } from 'next-auth/react'; // Import signIn from next-auth
 import { useRouter } from 'next/navigation';
 
 const SignupSchema = Yup.object().shape({
@@ -29,6 +29,7 @@ const SignupForm = () => {
         validationSchema={SignupSchema}
         onSubmit={async (values) => {
           try {
+            // Step 1: Sign up the user
             const response = await fetch('/api/signup', {
               method: 'POST',
               headers: {
@@ -39,18 +40,14 @@ const SignupForm = () => {
 
             const data = await response.json();
             if (response.ok) {
-              // Check if the user is signing up as an alumni
-              if (values.isAlumni) {
-                router.push('/createAlumni'); // Redirect to create alumni page
-              } else {
-                router.push('/'); // Redirect to home page for non-alumni users
-              }
+              // Step 2: Redirect to login page
+              router.push('/login'); // Redirects to login page after signup
             } else {
               console.error(data.error);
               // Handle any signup error (e.g., display error message to user)
             }
           } catch (error) {
-            console.error('An error occurred:', error);
+            console.error('An error occurred during signup:', error);
           }
         }}
       >

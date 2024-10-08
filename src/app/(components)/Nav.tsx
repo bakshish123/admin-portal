@@ -1,23 +1,25 @@
-"use client"
-import { usePathname } from 'next/navigation';
-import Link from 'next/link';
-import { getServerSession } from 'next-auth';
-import { options } from '../api/auth/[...nextauth]/options';
-import React from 'react';
+// components/Navbar.tsx
+"use client"; // Keep this to denote it's a client component
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+import React from "react";
 
-const Navbar: React.FC = async () => {
+interface NavbarProps {
+  session: any; // Replace 'any' with the appropriate type based on your session structure
+}
+
+const Navbar: React.FC<NavbarProps> = ({ session }) => {
   const pathname = usePathname();
-  const session = await getServerSession(options);
 
   const navItems = [
-    { name: 'Home', path: '/' },
-    { name: 'Search', path: '/Search' },
-    { name: 'Create Alumni', path: '/createAlumni' },
-    { name: 'Directory', path: '/directory' },
-    { name: 'Forums', path: '/forums' },
-    { name: 'Messaging', path: '/messaging' },
-    { name: 'Announcements', path: '/announcements' },
-    { name: 'Admin', path: '/admin' }, // Admin only access
+    { name: "Home", path: "/" },
+    { name: "Search", path: "/search" },
+    { name: "Create Alumni", path: "/createAlumni" },
+    { name: "Directory", path: "/directory" },
+    { name: "Forums", path: "/forums" },
+    { name: "Messaging", path: "/messaging" },
+    { name: "Announcements", path: "/announcements" },
+    { name: "Admin", path: "/admin" }, // Admin only access
   ];
 
   return (
@@ -28,29 +30,41 @@ const Navbar: React.FC = async () => {
         </div>
         <div className="flex space-x-4">
           {navItems.map((item, index) => (
-            <Link key={index} href={item.path} className={`px-3 py-2 rounded-md text-sm font-medium ${
-              pathname === item.path ? 'bg-gray-900' : 'hover:bg-gray-700'
-            }`}>
+            <Link
+              key={index}
+              href={item.path}
+              className={`px-3 py-2 rounded-md text-sm font-medium ${
+                pathname === item.path ? "bg-gray-900" : "hover:bg-gray-700"
+              }`}
+            >
               {item.name}
             </Link>
           ))}
         </div>
         <div>
-        {session ? (
-  <Link href="/api/auth/signout?callbackUrl=/" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
-    Logout
-  </Link>
-) : (
-  <div className="flex space-x-4"> {/* Add spacing between Login and Sign Up */}
-    <Link href="/api/auth/signin" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
-      Login
-    </Link>
-    <Link href="/signup" className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700">
-      Sign Up
-    </Link>
-  </div>
-)}
-
+          {session ? (
+            <Link
+              href="/api/auth/signout?callbackUrl=/"
+              className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+            >
+              Logout
+            </Link>
+          ) : (
+            <div className="flex space-x-4">
+              <Link
+                href="/api/auth/signin"
+                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+              >
+                Login
+              </Link>
+              <Link
+                href="/signup"
+                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+              >
+                Sign Up
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>

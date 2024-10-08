@@ -1,65 +1,76 @@
 import GitHubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
+import CredentialsProvider from "next-auth/providers/credentials";
 import NextAuth, { AuthOptions } from "next-auth";
-import { JWT } from "next-auth/jwt";
-import { Session } from "next-auth";
+import bcrypt from 'bcryptjs';
+import User from "@/app/models/genericUser";
+import dbConnect from "@/app/database";
 
-interface UserRole extends Record<string, any> {
-  role?: string;  // Define the role property as optional here
-}
-
-// Define the auth options
 export const options: AuthOptions = {
   providers: [
     GitHubProvider({
       clientId: process.env.GITHUB_CLIENT_ID || '',
       clientSecret: process.env.GITHUB_CLIENT_SECRET || '',
-      profile(profile) {
-        let userRole: string = "github user";
-        if (profile?.email === 'bakshish10621@gmail.com') {
-          userRole = 'admin';
-        }
-        return {
-          id: profile.id.toString(), // Convert id to string
-          name: profile.name,
-          email: profile.email,
-          image: profile.avatar_url,
-          role: userRole,
-        };
-      },
     }),
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID || '',
       clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
-      profile(profile) {
-        console.log("Profile Google: ", profile);
+    }),
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        rollNumber: { label: "Roll Number", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.rollNumber || !credentials?.password) {
+          throw new Error('Roll number and password are required');
+        }
 
-        let userRole: string = "Google User";
+        // Connect to the database
+        await dbConnect();
+
+        // Find user by roll number
+        const user = await User.findOne({ rollNumber: credentials.rollNumber });
+        if (!user) {
+          throw new Error('Invalid roll number or password');
+        }
+
+        // Compare passwords
+        const isValid = await bcrypt.compare(credentials.password, user.password);
+        if (!isValid) {
+          throw new Error('Invalid roll number or password');
+        }
+
+        // Return user object with alumni status
         return {
-          id: profile.sub,  // Google profile has `sub` as the unique identifier
-          name: profile.name,
-          email: profile.email,
-          image: profile.picture,
-          role: userRole,
+          id: user._id.toString(),
+          email: user.email,
+          rollNumber: user.rollNumber,
+          name: user.email,  // Optional: you can set name here or remove it
+          isAlumni: user.isAlumni,  // Alumni status
         };
       },
     }),
   ],
   callbacks: {
-    async jwt({ user, token }: { user?: UserRole; token: JWT }) {
+    async jwt({ user, token }) {
       if (user) {
-        // Ensure that the role property is defined and properly typed
-        token.role = user.role || ''; // Default to empty string if role is undefined
+        // Attach isAlumni to the token
+        token.isAlumni = user.isAlumni;
       }
       return token;
     },
-    async session({ session, token }: { session: Session; token: JWT }) {
+    async session({ session, token }) {
       if (session?.user) {
-        // Ensure that role property is a string
-        session.user.role = token.role as string;
+        // Attach isAlumni to the session
+        (session.user as any).isAlumni = token.isAlumni; // TypeScript doesn't know this field, so we cast it
       }
       return session;
     },
+  },
+  pages: {
+    signIn: '/login',  // Custom sign-in page
   },
 };
 

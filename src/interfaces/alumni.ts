@@ -5,6 +5,7 @@ export interface IAlumni {
     graduationYear: number;
     degree: string;
     major: string;
+    rollNumber: string;
     currentCompany?: string; // Optional field
     jobTitle?: string; // Optional field
     location?: string; // Optional field
