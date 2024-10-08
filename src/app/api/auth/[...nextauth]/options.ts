@@ -42,11 +42,13 @@ export const options: AuthOptions = {
           throw new Error('Invalid roll number or password');
         }
 
+        // Return user object with alumni status
         return {
           id: user._id.toString(),
           email: user.email,
           rollNumber: user.rollNumber,
-          role: user.isAlumni ? 'Alumni' : 'Student',
+          name: user.email,  // Optional: you can set name here or remove it
+          isAlumni: user.isAlumni,  // Alumni status
         };
       },
     }),
@@ -54,16 +56,21 @@ export const options: AuthOptions = {
   callbacks: {
     async jwt({ user, token }) {
       if (user) {
-        token.role = user.role || '';
+        // Attach isAlumni to the token
+        token.isAlumni = user.isAlumni;
       }
       return token;
     },
     async session({ session, token }) {
       if (session?.user) {
-        session.user.role = token.role as string;
+        // Attach isAlumni to the session
+        (session.user as any).isAlumni = token.isAlumni; // TypeScript doesn't know this field, so we cast it
       }
       return session;
     },
+  },
+  pages: {
+    signIn: '/login',  // Custom sign-in page
   },
 };
 

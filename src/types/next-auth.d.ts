@@ -1,20 +1,30 @@
-
-import 'next-auth';
-import { DefaultUser, DefaultSession } from 'next-auth';
+// types/next-auth.d.ts
+import NextAuth from 'next-auth';
 
 declare module 'next-auth' {
-  interface Session {
-    user: {
-      id: string; // Add custom fields here
-      name?: string | null;
-      email?: string | null;
-      image?: string | null;
-      role: string;
-    } & DefaultSession['user'];
+  interface User {
+    id: string;
+    email: string;
+    rollNumber: string;
+    name: string;
+    isAlumni: boolean;
   }
 
-  interface User {
-    id: string; // Add custom fields here
-    role: string;
+  interface Session {
+    user: {
+      id: string;
+      email: string;
+      rollNumber: string;
+      name: string;
+      isAlumni: boolean;
+    };
+  }
+
+  interface JWT {
+    id: string;
+    email: string;
+    rollNumber: string;
+    name: string;
+    isAlumni: boolean;
   }
 }

@@ -36,9 +36,9 @@ const AlumniSchema: Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  currentCompany: {
+  rollNumber: { // Add this line
     type: String,
-    trim: true,
+    required: true, // Make it required if needed
   },
   jobTitle: {
     type: String,
