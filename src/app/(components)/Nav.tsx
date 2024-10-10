@@ -13,7 +13,6 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "Search", path: "/search" },
     { name: "Create Alumni", path: "/createAlumni" },
     { name: "Directory", path: "/directory" },
     { name: "Forums", path: "/forums" },
@@ -23,29 +22,34 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
   ];
 
   return (
-    <nav className="bg-gray-800 text-white p-4">
+    <nav className="bg-black text-white p-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="text-2xl font-bold">
+        {/* Logo Section */}
+        <div className="text-2xl font-bold text-lilac-400">
           <Link href="/">Alumni Portal</Link>
         </div>
-        <div className="flex space-x-4">
+
+        {/* Navigation Links */}
+        <div className="flex space-x-6">
           {navItems.map((item, index) => (
             <Link
               key={index}
               href={item.path}
-              className={`px-3 py-2 rounded-md text-sm font-medium ${
-                pathname === item.path ? "bg-gray-900" : "hover:bg-gray-700"
+              className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
+                pathname === item.path ? "bg-lilac-500 text-blue-400" : "hover:bg-gray-700 hover:text-lilac-400"
               }`}
             >
               {item.name}
             </Link>
           ))}
         </div>
+
+        {/* Authentication Links */}
         <div>
           {session ? (
             <Link
               href="/api/auth/signout?callbackUrl=/"
-              className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+              className="px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-lilac-400 transition-colors duration-300"
             >
               Logout
             </Link>
@@ -53,13 +57,13 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
             <div className="flex space-x-4">
               <Link
                 href="/api/auth/signin"
-                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+                className="px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-lilac-400 transition-colors duration-300"
               >
                 Login
               </Link>
               <Link
                 href="/signup"
-                className="px-3 py-2 rounded-md text-sm font-medium hover:bg-gray-700"
+                className="px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-700 hover:text-lilac-400 transition-colors duration-300"
               >
                 Sign Up
               </Link>
