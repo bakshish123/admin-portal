@@ -22,7 +22,7 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
   ];
 
   return (
-    <nav className="bg-black text-white p-4 shadow-md">
+    <nav className="bg-[rgb(0,60,106)] text-white p-4 shadow-md opacity-100">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo Section */}
         <div className="text-2xl font-bold text-lilac-400">
@@ -36,7 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
               key={index}
               href={item.path}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
-                pathname === item.path ? "bg-lilac-500 text-blue-400" : "hover:bg-gray-700 hover:text-lilac-400"
+                pathname === item.path ? "bg-lilac-500 text-purple-400" : "hover:bg-gray-700 hover:text-lilac-400"
               }`}
             >
               {item.name}

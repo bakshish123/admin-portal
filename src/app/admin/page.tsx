@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 
 // Interfaces for Alumni and User
 interface IAlumni {
@@ -39,11 +39,11 @@ const AdminPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const alumniResponse = await fetch('/api/admin/alumni');
-        const usersResponse = await fetch('/api/admin/user');
+        const alumniResponse = await fetch("/api/admin/alumni");
+        const usersResponse = await fetch("/api/admin/user");
 
         if (!alumniResponse.ok || !usersResponse.ok) {
-          throw new Error('Failed to fetch data');
+          throw new Error("Failed to fetch data");
         }
 
         const alumniData = await alumniResponse.json();
@@ -52,7 +52,7 @@ const AdminPage: React.FC = () => {
         setAlumni(alumniData);
         setUsers(usersData);
       } catch (err) {
-        setError('Failed to load data');
+        setError("Failed to load data");
       } finally {
         setLoading(false);
       }
@@ -64,23 +64,25 @@ const AdminPage: React.FC = () => {
   const deleteAlumni = async (alumniId: string) => {
     try {
       const response = await fetch(`/api/admin/alumni?id=${alumniId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
-  
+
       if (!response.ok) {
         const errorMessage = await response.json();
         throw new Error(`Failed to delete alumni: ${errorMessage.message}`);
       }
-  
+
       // Update state to remove the deleted alumni from the list
-      setAlumni((prevAlumni) => prevAlumni.filter((alum) => alum.id !== alumniId));
+      setAlumni((prevAlumni) =>
+        prevAlumni.filter((alum) => alum.id !== alumniId)
+      );
     } catch (err) {
       if (err instanceof Error) {
         console.error(err.message); // Log the error message
-        setError(err.message || 'Failed to delete alumni');
+        setError(err.message || "Failed to delete alumni");
       } else {
-        console.error('An unknown error occurred:', err); // Log unknown errors
-        setError('Failed to delete alumni');
+        console.error("An unknown error occurred:", err); // Log unknown errors
+        setError("Failed to delete alumni");
       }
     }
   };
@@ -88,7 +90,7 @@ const AdminPage: React.FC = () => {
   const deleteUser = async (userId: string) => {
     try {
       const response = await fetch(`/api/admin/user?id=${userId}`, {
-        method: 'DELETE',
+        method: "DELETE",
       });
 
       if (!response.ok) {
@@ -101,10 +103,10 @@ const AdminPage: React.FC = () => {
     } catch (err) {
       if (err instanceof Error) {
         console.error(err.message); // Log the error message
-        setError(err.message || 'Failed to delete user');
+        setError(err.message || "Failed to delete user");
       } else {
-        console.error('An unknown error occurred:', err); // Log unknown errors
-        setError('Failed to delete user');
+        console.error("An unknown error occurred:", err); // Log unknown errors
+        setError("Failed to delete user");
       }
     }
   };
@@ -112,22 +114,25 @@ const AdminPage: React.FC = () => {
   const toggleAlumniStatus = async (userId: string, rollNumber: string) => {
     try {
       const response = await fetch(`/api/admin/user?id=${userId}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ rollNumber }), // Include only the roll number
       });
 
       if (!response.ok) {
         const errorMessage = await response.json();
-        throw new Error(`Failed to update user alumni status: ${errorMessage.message}`);
+        throw new Error(
+          `Failed to update user alumni status: ${errorMessage.message}`
+        );
       }
 
       const updatedUser = await response.json();
       setUsers(users.map((user) => (user.id === userId ? updatedUser.user : user)));
     } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to update user status';
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to update user status";
       console.error(errorMessage);
       setError(errorMessage);
     }
@@ -137,85 +142,80 @@ const AdminPage: React.FC = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Admin Dashboard</h1>
+    <div className="flex items-center justify-center min-h-screen"
+     style={{ backgroundImage: "url('/hero-bg.jpg')" }}>
+      <div className="max-w-7xl w-full mx-auto p-8 rounded-lg shadow-lg">
+        <h1 className="text-3xl font-bold mb-6 text-white">Admin Dashboard</h1>
 
-      {/* Alumni List */}
-      <section className="mb-8">
-        <h2 className="text-2xl font-semibold mb-4">Alumni Management</h2>
-        <table className="min-w-full bg-white border rounded">
-          <thead>
-            <tr>
-              <th className="p-2 border">Name</th>
-              <th className="p-2 border">Email</th>
-              <th className="p-2 border">Roll Number</th>
-              <th className="p-2 border">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {alumni.map((alum) => (
-              <tr key={alum.id}>
-                <td className="p-2 border">
-                  {alum.firstName} {alum.lastName}
-                </td>
-                <td className="p-2 border">{alum.email}</td>
-                <td className="p-2 border">{alum.rollNumber}</td>
-                <td className="p-2 border">
-                  <button
-                    onClick={() => deleteAlumni(alum.id)}
-                    className="bg-red-500 text-white p-2 rounded"
-                  >
-                    Delete
-                  </button>
-                </td>
+        {/* Alumni List */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-4 text-white">Alumni Management</h2>
+          <table className="min-w-full bg-[#374151] text-white rounded-lg shadow-md">
+            <thead>
+              <tr>
+                <th className="p-4 border border-gray-600">Name</th>
+                <th className="p-4 border border-gray-600">Email</th>
+                <th className="p-4 border border-gray-600">Roll Number</th>
+                <th className="p-4 border border-gray-600">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+            </thead>
+            <tbody>
+              {alumni.map((alum) => (
+                <tr key={alum.id} className="hover:bg-[#4b5563]">
+                  <td className="p-4 border border-gray-600">
+                    {alum.firstName} {alum.lastName}
+                  </td>
+                  <td className="p-4 border border-gray-600">{alum.email}</td>
+                  <td className="p-4 border border-gray-600">{alum.rollNumber}</td>
+                  <td className="p-4 border border-gray-600">
+                    <button
+                      onClick={() => deleteAlumni(alum.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white p-2 rounded font-bold mr-2"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
 
-      {/* User List */}
-      <section>
-        <h2 className="text-2xl font-semibold mb-4">User Management</h2>
-        <table className="min-w-full bg-white border rounded">
-          <thead>
-            <tr>
-              <th className="p-2 border">Email</th>
-              <th className="p-2 border">Roll Number</th>
-              <th className="p-2 border">Is Alumni</th>
-              <th className="p-2 border">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id}>
-                <td className="p-2 border">{user.email}</td>
-                <td className="p-2 border">{user.rollNumber}</td>
-                <td className="p-2 border">
-                  {user.isAlumni ? 'Yes' : 'No'}
-                </td>
-                <td className="p-2 border">
-                  <button
-                    onClick={() => deleteUser(user.id)}
-                    className="bg-red-500 text-white p-2 rounded"
-                  >
-                    Delete
-                  </button>
-                  <button
-                    onClick={()=> {
-                      // Only sending roll number for alumni verification
-                      toggleAlumniStatus(user.id, user.rollNumber);
-                    }}
-                    className="bg-blue-500 text-white p-2 rounded ml-2"
-                  >
-                    {user.isAlumni ? 'Revoke Alumni' : 'Verify as Alumni'}
-                  </button>
-                </td>
+        {/* User List */}
+        <section>
+          <h2 className="text-2xl font-semibold mb-4 text-white">User Management</h2>
+          <table className="min-w-full bg-[#374151] text-white rounded-lg shadow-md">
+            <thead>
+              <tr>
+                <th className="p-4 border border-gray-600">Email</th>
+                <th className="p-4 border border-gray-600">Roll Number</th>
+                <th className="p-4 border border-gray-600">Is Alumni</th>
+                <th className="p-4 border border-gray-600">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+            </thead>
+            <tbody>
+              {users.map((user) => (
+                <tr key={user.id} className="hover:bg-[#4b5563]">
+                  <td className="p-4 border border-gray-600">{user.email}</td>
+                  <td className="p-4 border border-gray-600">{user.rollNumber}</td>
+                  <td className="p-4 border border-gray-600">
+                    {user.isAlumni ? "Yes" : "No"}
+                  </td>
+                  <td className="p-4 border border-gray-600">
+                    <button
+                      onClick={() => deleteUser(user.id)}
+                      className="bg-red-500 hover:bg-red-600 text-white p-2 rounded font-bold mr-2"
+                    >
+                      Delete
+                    </button>
+                    
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </section>
+      </div>
     </div>
   );
 };

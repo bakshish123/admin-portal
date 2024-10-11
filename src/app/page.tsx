@@ -6,39 +6,40 @@ import { motion } from "framer-motion";
 
 const Home = () => {
   return (
-    <div className="bg-gray-900 text-white min-h-screen">
+    <div className="bg-[rgb(0,60,106)] text-white min-h-screen">
       {/* Hero Section */}
       <section
-        className="relative h-screen bg-cover bg-center"
-        style={{ backgroundImage: "url('/path-to-hero-image.jpg')" }}
-      >
-        <div className="absolute inset-0 bg-black bg-opacity-50 flex flex-col justify-center items-center text-center">
-          <motion.h1
-            className="text-6xl font-bold text-white italic"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            Welcome to the Alumni Portal
-          </motion.h1>
-          <motion.p
-            className="mt-4 text-lg text-gray-300 italic"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7 }}
-          >
-            Connect, Share, and Grow Together
-          </motion.p>
-          <motion.button
-            className="mt-8 px-6 py-3 bg-lilac-400 text-black font-semibold rounded-lg hover:bg-lilac-500 transition-colors duration-300"
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.9 }}
-          >
-            Join Us
-          </motion.button>
-        </div>
-      </section>
+  className="relative h-screen bg-cover bg-center"
+  style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+>
+  <div className="absolute inset-0 bg-[rgb(0,60,106)] bg-opacity-20 flex flex-col justify-center items-center text-center">
+    <motion.h1
+      className="text-6xl font-bold text-white italic"
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      Welcome to the Alumni Portal
+    </motion.h1>
+    <motion.p
+      className="mt-4 text-lg text-gray-300 italic"
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.7 }}
+    >
+      Connect, Share, and Grow Together
+    </motion.p>
+    <motion.button
+      className="mt-8 px-6 py-3 bg-lilac-400 text-purple-500 font-semibold rounded-lg hover:bg-lilac-500 transition-colors duration-300"
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.9 }}
+    >
+      Join Us
+    </motion.button>
+  </div>
+</section>
+
 
       {/* About Section */}
       <section className="py-20 px-4 lg:px-32">
@@ -58,7 +59,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
           >
             <Image
-              src="/path-to-image-1.jpg"
+              src="/networking.jpg"
               alt="Networking"
               className="w-full h-40 object-cover rounded-lg mb-4"
               width={500}
@@ -78,7 +79,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
           >
             <Image
-              src="/path-to-image-2.jpg"
+              src="/events.jpg"
               alt="Events"
               className="w-full h-40 object-cover rounded-lg mb-4"
               width={500}
@@ -98,7 +99,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
           >
             <Image
-              src="/path-to-image-3.jpg"
+              src="/mentorship.jpg"
               alt="Mentorship"
               className="w-full h-40 object-cover rounded-lg mb-4"
               width={500}
@@ -129,7 +130,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
           >
             <Image
-              src="/path-to-alumni-1.jpg"
+              src="/p1.jpg"
               alt="Alumni 1"
               className="w-32 h-32 rounded-full mx-auto mb-4"
               width={128}
@@ -146,7 +147,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
           >
             <Image
-              src="/path-to-alumni-2.jpg"
+              src="/p2.jpg"
               alt="Alumni 2"
               className="w-32 h-32 rounded-full mx-auto mb-4"
               width={128}
@@ -163,7 +164,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
           >
             <Image
-              src="/path-to-alumni-3.jpg"
+              src="/p3.jpg"
               alt="Alumni 3"
               className="w-32 h-32 rounded-full mx-auto mb-4"
               width={128}

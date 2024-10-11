@@ -38,7 +38,7 @@ const AlumniForm = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-fixed bg-cover bg-center"
-         style={{ backgroundImage: 'url(/background-image.jpg)' }}>
+         style={{ backgroundImage: "url('/hero-bg.jpg')" }}>
       <div className="bg-black/70 p-8 rounded-lg shadow-lg max-w-2xl w-full mt-20">
         <h1 className="text-3xl font-bold text-lilac-500 mb-8 text-center">Create Alumni Profile</h1>
         <div className="bg-white/20 p-6 rounded-lg backdrop-filter backdrop-blur-md"> {/* Transparent form */}
@@ -177,7 +177,7 @@ const AlumniForm = () => {
                   />
                   <ErrorMessage name="bio" component="div" className="text-red-600 text-sm" />
                 </div>
-                <button type="submit" className="mt-4 px-4 py-2 bg-lilac-500 text-white rounded-md">
+                <button type="submit" className="mt-4 px-4 py-2 bg-blue-700 text-white rounded-md">
                 Submit
               </button>
             </Form>
