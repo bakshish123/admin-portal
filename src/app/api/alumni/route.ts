@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server';
 import Alumni from '../../models/alumni'; // Adjust the path if needed
 import connectDB from '../../database/index'; // Adjust the path if needed
-import { IAlumniFilter } from '@/interfaces/alumni'; // Adjust the import path
 
 export async function GET(req: Request) {
   try {
@@ -15,7 +14,7 @@ export async function GET(req: Request) {
     const currentCompany = searchParams.get('currentCompany') || '';
 
     // Build the query object dynamically based on filters
-    const query: IAlumniFilter = {}; // Use the IAlumniFilter type here
+    const query: any = {};
     if (degree) query.degree = { $regex: degree, $options: 'i' }; // Case-insensitive matching
     if (jobTitle) query.jobTitle = { $regex: jobTitle, $options: 'i' };
     if (currentCompany) query.currentCompany = { $regex: currentCompany, $options: 'i' };

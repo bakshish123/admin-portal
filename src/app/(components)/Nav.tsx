@@ -3,10 +3,9 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import React from "react";
-import { Session } from "next-auth"; // Import the Session interface
 
 interface NavbarProps {
-  session: Session | null; // Update type to Session or null
+  session: any; // Replace 'any' with the appropriate type based on your session structure
 }
 
 const Navbar: React.FC<NavbarProps> = ({ session }) => {
@@ -37,7 +36,7 @@ const Navbar: React.FC<NavbarProps> = ({ session }) => {
               key={index}
               href={item.path}
               className={`px-4 py-2 rounded-md text-sm font-medium transition-colors duration-300 ${
-                pathname === item.path ? "bg-lilac-500 text-purple-400" : "hover:bg-gray-700 hover:text-lilac-400"
+                pathname === item.path ? "bg-lilac-500 text-purp-400" : "hover:bg-gray-700 hover:text-lilac-400"
               }`}
             >
               {item.name}

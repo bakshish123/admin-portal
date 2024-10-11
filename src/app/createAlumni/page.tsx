@@ -26,7 +26,7 @@ const validationSchema = Yup.object({
 const AlumniForm = () => {
   const router = useRouter(); // Initialize useRouter for navigation
 
-  const handleSubmit = async (values: IAlumni) => {
+  const handleSubmit = async (values: any) => {
     try {
       await axios.post('/api/create-alumni', values);
       alert('Alumni created successfully!');

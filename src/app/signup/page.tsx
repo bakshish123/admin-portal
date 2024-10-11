@@ -18,7 +18,7 @@ const SignupForm = () => {
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-fixed bg-cover bg-center"
-      style={{ backgroundImage: 'url(/background-image.jpg)' }}
+      style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
     >
       <div className="bg-black/70 p-8 rounded-lg shadow-lg max-w-2xl w-full mt-20">
         <h1 className="text-3xl font-bold text-lilac-500 mb-8 text-center">Sign Up</h1>
