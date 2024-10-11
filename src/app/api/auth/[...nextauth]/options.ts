@@ -73,5 +73,3 @@ export const options: AuthOptions = {
     signIn: '/login',  // Custom sign-in page
   },
 };
-
-export default NextAuth(options);

@@ -14,3 +14,8 @@ export interface IAlumni {
     createdAt?: Date;
     updatedAt?: Date;
   }
+  export interface IAlumniFilter {
+    degree?: { $regex: string; $options: string };
+    jobTitle?: { $regex: string; $options: string };
+    currentCompany?: { $regex: string; $options: string };
+  }

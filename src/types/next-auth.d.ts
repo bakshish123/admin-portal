@@ -28,3 +28,6 @@ declare module 'next-auth' {
     isAlumni: boolean;
   }
 }
+
+// Using NextAuth here to avoid the unused variable error
+export default NextAuth;

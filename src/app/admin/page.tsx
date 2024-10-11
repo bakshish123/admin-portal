@@ -111,33 +111,6 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  const toggleAlumniStatus = async (userId: string, rollNumber: string) => {
-    try {
-      const response = await fetch(`/api/admin/user?id=${userId}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ rollNumber }), // Include only the roll number
-      });
-
-      if (!response.ok) {
-        const errorMessage = await response.json();
-        throw new Error(
-          `Failed to update user alumni status: ${errorMessage.message}`
-        );
-      }
-
-      const updatedUser = await response.json();
-      setUsers(users.map((user) => (user.id === userId ? updatedUser.user : user)));
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Failed to update user status";
-      console.error(errorMessage);
-      setError(errorMessage);
-    }
-  };
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>{error}</p>;
 

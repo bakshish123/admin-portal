@@ -3,9 +3,10 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import React from "react";
+import { Session } from "next-auth"; // Import the Session interface
 
 interface NavbarProps {
-  session: any; // Replace 'any' with the appropriate type based on your session structure
+  session: Session | null; // Update type to Session or null
 }
 
 const Navbar: React.FC<NavbarProps> = ({ session }) => {

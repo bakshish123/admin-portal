@@ -3,7 +3,7 @@ import Alumni from '@/app/models/alumni'; // Adjust the path if needed
 import connectDB from '@/app/database/index'; // Adjust the path if needed
 
 // GET: Fetch all alumni
-export async function GET(req: Request) {
+export async function GET() {
   try {
     await connectDB();
     const alumni = await Alumni.find().lean();

@@ -191,7 +191,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
           >
             <p className="text-gray-400 italic">
-              "The Alumni Portal has helped me stay connected with my college network and has opened up many professional opportunities."
+            &quot;The Alumni Portal has helped me stay connected with my college network and has opened up many professional opportunities.&quot;
             </p>
             <h3 className="mt-4 text-xl font-bold text-lilac-400 italic">Emily Davis</h3>
           </motion.div>
@@ -204,7 +204,7 @@ const Home = () => {
             transition={{ duration: 0.5 }}
           >
             <p className="text-gray-400 italic">
-              "This platform has made it so easy to network with alumni in my field, and the mentorship I’ve received has been invaluable."
+            &quot;This platform has made it so easy to network with alumni in my field, and the mentorship I’ve received has been invaluable.&quot;
             </p>
             <h3 className="mt-4 text-xl font-bold text-lilac-400 italic">Michael Brown</h3>
           </motion.div>
