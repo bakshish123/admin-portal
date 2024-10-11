@@ -1,6 +1,5 @@
 
 
-import type { NextApiRequest, NextApiResponse } from 'next';
 import Alumni from '../../models/alumni';
 import connectDB from '../../database/index'; // Function to handle MongoDB connection
 

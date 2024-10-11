@@ -1,4 +1,5 @@
 "use client"
+import { IAlumni } from '@/interfaces/alumni';
 import React from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -25,9 +26,9 @@ const validationSchema = Yup.object({
 const AlumniForm = () => {
   const router = useRouter(); // Initialize useRouter for navigation
 
-  const handleSubmit = async (values: any) => {
+  const handleSubmit = async (values: IAlumni) => {
     try {
-      const response = await axios.post('/api/create-alumni', values);
+      await axios.post('/api/create-alumni', values);
       alert('Alumni created successfully!');
       router.push('/'); // Redirect to the home page after successful form submission
     } catch (error) {
@@ -47,7 +48,7 @@ const AlumniForm = () => {
               firstName: '',
               lastName: '',
               email: '',
-              graduationYear: '',
+              graduationYear: 0,
               degree: '',
               major: '',
               rollNumber: '',
